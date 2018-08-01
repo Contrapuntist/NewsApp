@@ -44,11 +44,13 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
         articles = new ArrayList<Article>();
 
+        progressLoader = (ProgressBar) findViewById(R.id.progress_loader);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-
+        mAdapter = new ArticleAdapter(this, articles);
 
         connectionManager = (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connectionManager.getActiveNetworkInfo();
@@ -71,9 +73,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> articles) {
-//        progressLoader.setVisibility(View.GONE);
-
-        mAdapter = new ArticleAdapter(this, articles);
+        progressLoader.setVisibility(View.GONE);
+        mAdapter = new ArticleAdapter(MainActivity.this, articles);
         mRecyclerView.setAdapter(mAdapter);
 
     }

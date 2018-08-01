@@ -28,7 +28,6 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
         URL queryURL = QueryUtils.createURL(queryString);
         String APIResponse = QueryUtils.httpRequest(queryURL);
-        Log.i(LOG_TAG, APIResponse);
         List<Article> articlesList = QueryUtils.extractArticleResultsFromJSON(APIResponse);
         Log.i(LOG_TAG + " ARRAY LIST ARTICLES: ", articlesList.toString());
         return articlesList;
