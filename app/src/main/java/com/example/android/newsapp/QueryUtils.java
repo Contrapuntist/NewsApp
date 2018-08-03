@@ -1,11 +1,11 @@
 package com.example.android.newsapp;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,24 +14,25 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.MalformedInputException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class QueryUtils {
 
     final static String LOG_TAG = QueryUtils.class.getName();
 
-    private QueryUtils () {
+    private QueryUtils() {
     }
 
-    public static URL createURL (String stringURL) {
-
-
+    public static URL createURL(String stringURL) {
         URL queryURL = null;
 
         try {
             queryURL = new URL(stringURL);
-
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "error with creating URL", e);
         }
@@ -39,7 +40,7 @@ public class QueryUtils {
         return queryURL;
     }
 
-    public static String httpRequest (URL requestURL) {
+    public static String httpRequest(URL requestURL) {
         String JSONresponse = "";
         HttpURLConnection connection = null;
         InputStream inputStream = null;
@@ -59,11 +60,11 @@ public class QueryUtils {
 
             // get response code
             resCode = connection.getResponseCode();
-            if(resCode == 200){
-              inputStream = connection.getInputStream();
-              JSONresponse = readStream(inputStream);
+            if (resCode == 200) {
+                inputStream = connection.getInputStream();
+                JSONresponse = readStream(inputStream);
             } else {
-                Log.e(LOG_TAG, "RESPONSE CODE: " + resCode );
+                Log.e(LOG_TAG, "RESPONSE CODE: " + resCode);
             }
 
         } catch (IOException e) {
@@ -77,7 +78,7 @@ public class QueryUtils {
         return JSONresponse;
     }
 
-    private static String readStream (InputStream inputStream) throws IOException {
+    private static String readStream(InputStream inputStream) throws IOException {
         StringBuilder responseOutput = new StringBuilder();
 
         if (inputStream != null) {
@@ -93,9 +94,8 @@ public class QueryUtils {
         return responseOutput.toString();
     }
 
-    public static ArrayList<Article> extractArticleResultsFromJSON (String newsJSON) {
-
-        Log.i("EXTRACTING RESULTS: ", newsJSON);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static ArrayList<Article> extractArticleResultsFromJSON(String newsJSON) {
 
         ArrayList<Article> articles = new ArrayList<Article>();
 
@@ -104,27 +104,30 @@ public class QueryUtils {
             JSONObject response = articlesBaseJSON.getJSONObject("response");
             JSONArray results = response.getJSONArray("results");
 
-            Log.i(LOG_TAG, results.toString());
-            for ( int i = 0; i < results.length(); i++ ) {
+            for (int i = 0; i < results.length(); i++) {
                 JSONObject articleObj = results.getJSONObject(i);
 
                 String title = articleObj.getString("webTitle");
-                Log.i(LOG_TAG, title);
                 String url = articleObj.getString("webUrl");
                 String section = articleObj.getString("sectionId");
+
                 String date = articleObj.getString("webPublicationDate");
+                Instant instant = Instant.parse(date);
+                DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                        .withLocale(Locale.UK)
+                        .withZone(ZoneId.systemDefault());
+                String output = formatter.format(instant);
 
                 JSONObject fields = articleObj.getJSONObject("fields");
                 String author = fields.getString("byline");
+                String image = fields.getString("thumbnail");
 
-                articles.add(new Article(title, author, section, date, url));
+                articles.add(new Article(title, author, section, output, url, image));
             }
-
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error extracting results from JSON", e);
         }
 
-        Log.i(LOG_TAG, "" + articles);
         return articles;
     }
 }

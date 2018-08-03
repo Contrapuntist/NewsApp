@@ -1,62 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/article_item_parent"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:id="@+id/article_item_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="12dp">
+        android:layout_margin="@dimen/four_dp"
+        app:cardCornerRadius="@dimen/twelve_dp">
 
         <RelativeLayout
             android:id="@+id/layout_in_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="@dimen/sixteen_dp">
+
+
+
+            <ImageView
+                android:id="@+id/article_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_height"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/eight_dp"
+                android:contentDescription="@string/news_image"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ic_launcher_background" />
 
             <TextView
-                android:layout_alignParentTop="true"
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Article Title"/>
-
-            <TextView
-                android:layout_below="@+id/title"
-                android:id="@+id/author"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Author"/>
-
-            <TextView
-                android:layout_below="@+id/author"
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="May 1, 2017"/>
-
-            <TextView
-                android:layout_below="@+id/date"
                 android:id="@+id/section"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="@color/primaryDarkColorWithTransparency"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:gravity="end"
+                android:padding="@dimen/four_dp"
+                android:textAllCaps="true"
+                android:textColor="@color/secondaryLightColor"
+                android:textSize="@dimen/article_info"
                 tools:text="music" />
 
             <TextView
-                android:id="@+id/url"
-                android:layout_below="@+id/section"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="google.com"/>
+                android:layout_below="@+id/article_image"
+                android:fontFamily="@font/nunito_sans_extra_bold"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/headline"
+                tools:text="Article Title" />
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_marginBottom="@dimen/four_dp"
+                android:layout_marginTop="@dimen/four_dp"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/author"
+                tools:text="Author" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/author"
+                android:layout_marginBottom="@dimen/eight_dp"
+                android:fontFamily="@font/nunito_sans_light"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/article_info"
+                tools:text="May 1, 2017" />
+
+            <TextView
+                android:id="@+id/url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date"
+                android:fontFamily="@font/nunito_sans_extra_bold"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/article_info"
+                tools:text="www.google.com" />
 
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
-
 </LinearLayout>

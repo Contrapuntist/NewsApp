@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     private TextView emptyView;
     private ProgressBar progressLoader;
+
     private NetworkInfo networkInfo;
-    private ConnectivityManager connectionManager;
     private List<Article> articles;
 
     private RecyclerView mRecyclerView;
@@ -33,8 +33,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     private RecyclerView.LayoutManager mLayoutManager;
 
     private static final String queryString =
-            "https://content.guardianapis.com/search?section=music&production-office=US&order-by=newest&show-fields=all&page-size=15&api-key=5e277810-8570-493e-9185-5d69d66ad663";
+            "https://content.guardianapis.com/search?section=music&order-by=newest&show-fields=all&page-size=15&api-key=5e277810-8570-493e-9185-5d69d66ad663";
 
+    private boolean isConnected;
     private static final String LOG_TAG = MainActivity.class.getName();
 
     @Override
@@ -45,42 +46,54 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         articles = new ArrayList<Article>();
 
         progressLoader = (ProgressBar) findViewById(R.id.progress_loader);
-
+        emptyView = (TextView) findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new ArticleAdapter(this, articles);
+        mRecyclerView.setAdapter(mAdapter);
 
-        connectionManager = (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        ConnectivityManager connectionManager = (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connectionManager.getActiveNetworkInfo();
-
-        boolean isConnected = networkInfo != null &&
+        isConnected = networkInfo != null &&
                               networkInfo.isConnected();
         if (isConnected) {
-            Log.i("NETWORK CHECK", "NETWORK IS CONNECTED IN ON CREATE");
             getLoaderManager().initLoader(0, null, this);
         } else {
-            emptyView.setText("NO Internet Connection");
+            progressLoader.setVisibility(View.GONE);
+            emptyView.setText(R.string.no_internet);
         }
     }
 
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) {
         Log.i(LOG_TAG, "Loader is getting created.");
-        return new ArticleLoader(MainActivity.this, queryString);
+        if (isConnected) {
+            return new ArticleLoader(MainActivity.this, queryString);
+        } else {
+            return null;
+        }
+
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Article>> loader, List<Article> articles) {
+    public void onLoadFinished(Loader<List<Article>> loader, List<Article> data) {
         progressLoader.setVisibility(View.GONE);
-        mAdapter = new ArticleAdapter(MainActivity.this, articles);
-        mRecyclerView.setAdapter(mAdapter);
+
+        if (data != null && !data.isEmpty() ) {
+            articles.addAll(data);
+            mAdapter.notifyDataSetChanged();
+            emptyView.setVisibility(View.GONE);
+        } else {
+            emptyView.setText(R.string.no_results);
+        }
 
     }
 
     @Override
     public void onLoaderReset(Loader<List<Article>> loader) {
-
+        articles.clear();
     }
 }

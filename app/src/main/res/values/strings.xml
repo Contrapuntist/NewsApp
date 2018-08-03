@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NewsApp</string>
+
+    <!--No Results-->
+    <string name="no_results">Oh no. There are no results. Try again later.</string>
+
+    <!--NO Internet-->
+    <string name="no_internet">Sorry, it appears you\'ve lost connection to the internet.</string>
+
+    <string name="read_article">Read Story</string>
+    <string name="news_image">News article thumbnail</string>
 </resources>

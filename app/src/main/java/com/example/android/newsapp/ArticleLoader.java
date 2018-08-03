@@ -19,7 +19,7 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
     @Override
     protected void onStartLoading() {
-        Log.i(LOG_TAG, "Loader started and in OnStartLoading");
+
         forceLoad();
     }
 
@@ -29,7 +29,7 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
         URL queryURL = QueryUtils.createURL(queryString);
         String APIResponse = QueryUtils.httpRequest(queryURL);
         List<Article> articlesList = QueryUtils.extractArticleResultsFromJSON(APIResponse);
-        Log.i(LOG_TAG + " ARRAY LIST ARTICLES: ", articlesList.toString());
+
         return articlesList;
     }
 }

@@ -7,14 +7,18 @@ public class Article {
     private String section;
     private String pubDate;
     private String url;
+    private String image;
 
-    public Article(String articleTitle, String articleAuthor, String articleSection, String articlePublishDate, String articleUrl) {
+    public Article(String articleTitle, String articleAuthor,
+                   String articleSection, String articlePublishDate,
+                   String articleUrl, String imageUrl) {
         super();
         title = articleTitle;
         author = articleAuthor;
         section = articleSection;
         pubDate = articlePublishDate;
         url = articleUrl;
+        image = imageUrl;
     }
 
     public String getTitle() {
@@ -35,5 +39,9 @@ public class Article {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getImage() {
+        return image;
     }
 }
