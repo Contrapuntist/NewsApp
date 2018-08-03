@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsApp</string>
+    <string name="app_name">ECHO Music News</string>
 
     <!--No Results-->
     <string name="no_results">Oh no. There are no results. Try again later.</string>
