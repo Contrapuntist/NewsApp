@@ -2,6 +2,7 @@ package com.example.android.newsapp;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.text.format.DateUtils;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,16 +15,21 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.time.Instant;
-import java.time.ZoneId;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
+
+import static java.lang.String.format;
 
 public class QueryUtils {
 
-    final static String LOG_TAG = QueryUtils.class.getName();
+    final private static String LOG_TAG = QueryUtils.class.getName();
 
     private QueryUtils() {
     }
@@ -95,7 +101,7 @@ public class QueryUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static ArrayList<Article> extractArticleResultsFromJSON(String newsJSON) {
+    public static ArrayList<Article> extractArticleResultsFromJSON(String newsJSON) throws ParseException {
 
         ArrayList<Article> articles = new ArrayList<Article>();
 
@@ -111,23 +117,35 @@ public class QueryUtils {
                 String url = articleObj.getString("webUrl");
                 String section = articleObj.getString("sectionId");
 
+                // Convert incoming Date string from API
                 String date = articleObj.getString("webPublicationDate");
-                Instant instant = Instant.parse(date);
-                DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                        .withLocale(Locale.UK)
-                        .withZone(ZoneId.systemDefault());
-                String output = formatter.format(instant);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.UK);
+                sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+                // Reformat date to preferred output keeping in UK (Guardian API time)
+                Date stringToDate = sdf.parse(date);
+                SimpleDateFormat dateOutputformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+                String dateOutput = dateOutputformat.format(stringToDate);
 
                 JSONObject fields = articleObj.getJSONObject("fields");
                 String author = fields.getString("byline");
                 String image = fields.getString("thumbnail");
 
-                articles.add(new Article(title, author, section, output, url, image));
+                articles.add(new Article(title, author, section, dateOutput, url, image));
+
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error extracting results from JSON", e);
         }
 
         return articles;
+    }
+
+    public static String convertDate (String dateStr) {
+        String date = dateStr;
+
+
+
+        return date;
     }
 }
