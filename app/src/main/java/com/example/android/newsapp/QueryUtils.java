@@ -143,7 +143,6 @@ public class QueryUtils {
                 }
 
                 articles.add(new Article(title, author, section, dateOutput, url, image));
-
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error extracting results from JSON", e);

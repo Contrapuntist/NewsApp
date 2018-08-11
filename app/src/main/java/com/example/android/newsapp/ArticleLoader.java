@@ -20,13 +20,11 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
     @Override
     protected void onStartLoading() {
-
         forceLoad();
     }
 
     @Override
     public List<Article> loadInBackground() {
-
         URL queryURL = QueryUtils.createURL(queryString);
         String APIResponse = QueryUtils.httpRequest(queryURL);
         List<Article> articlesList = null;
@@ -35,7 +33,6 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return articlesList;
     }
 }

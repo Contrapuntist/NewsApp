@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private static final String queryString =
-            "https://content.guardianapis.com/search?section=music&order-by=newest&show-fields=all&page-size=15&api-key=5e277810-8570-493e-9185-5d69d66ad663";
-
     private static final String queryStringBase =
             "https://content.guardianapis.com/search?";
 
@@ -118,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         } else {
             return null;
         }
-
     }
 
     @Override
@@ -132,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         } else {
             emptyView.setText(R.string.no_results);
         }
-
     }
 
     @Override
