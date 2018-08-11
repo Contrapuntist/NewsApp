@@ -44,4 +44,5 @@ public class Article {
     public String getImage() {
         return image;
     }
+
 }

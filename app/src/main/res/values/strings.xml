@@ -9,4 +9,43 @@
 
     <string name="read_article">Read Story</string>
     <string name="news_image">News article thumbnail</string>
+
+    <!--Preferences-->
+    <string name="settings_menu_title">Settings</string>
+    <string name="news_settings_title">News Settings</string>
+
+    <!--Production Office-->
+    <string name="settings_location_label">Bureau Locations</string>
+    <string name="settings_location_key" translatable="false">location</string>
+    <string name="settings_location_default_value" translatable="false">@string/settings_location_default_value_all</string>
+
+    <string name="settings_location_default_label_all">All</string>
+    <string name="settings_location_default_value_all">All</string>
+
+    <string name="settings_location_label_UK">UK</string>
+    <string name="settings_location_value_UK">UK</string>
+
+    <string name="settings_location_label_US">US</string>
+    <string name="settings_location_value_US">US</string>
+
+    <string name="settings_location_label_AUS">AUS</string>
+    <string name="settings_location_value_AUS">AUS</string>
+
+    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">order_by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_value_newest</string>
+
+    <string name="settings_order_by_label_newest">Newest</string>
+    <string name="settings_order_by_value_newest">newest</string>
+
+    <string name="settings_order_by_label_oldest">Oldest</string>
+    <string name="settings_order_by_value_oldest">oldest</string>
+
+    <!-- Custom Search Preference -->
+    <string name="settings_search_label">Search</string>
+    <string name="settings_search_key" translatable="false">search</string>
+    <string name="settings_search_default_value" translatable="false">@string/settings_search_default_value_none</string>
+
+    <string name="settings_search_default_value_none">None</string>
 </resources>

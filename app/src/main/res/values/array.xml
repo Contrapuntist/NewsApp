@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Location String Arrays-->
+    <string-array name="news_location_labels">
+        <item>@string/settings_location_default_value_all</item>
+        <item>@string/settings_location_label_UK</item>
+        <item>@string/settings_location_label_US</item>
+        <item>@string/settings_location_label_AUS</item>
+    </string-array>
+
+    <string-array name="news_location_values">
+        <item>@string/settings_location_default_value</item>
+        <item>@string/settings_location_value_UK</item>
+        <item>@string/settings_location_value_US</item>
+        <item>@string/settings_location_value_AUS</item>
+    </string-array>
+
+    <!--Order By String Arrays-->
+    <string-array name="news_order_by_labels">
+        <item>@string/settings_order_by_label_newest</item>
+        <item>@string/settings_order_by_label_oldest</item>
+    </string-array>
+
+    <string-array name="news_order_by_values">
+        <item>@string/settings_order_by_value_newest</item>
+        <item>@string/settings_order_by_value_oldest</item>
+    </string-array>
+</resources>

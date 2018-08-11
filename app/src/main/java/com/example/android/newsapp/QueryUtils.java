@@ -128,8 +128,19 @@ public class QueryUtils {
                 String dateOutput = dateOutputformat.format(stringToDate);
 
                 JSONObject fields = articleObj.getJSONObject("fields");
-                String author = fields.getString("byline");
-                String image = fields.getString("thumbnail");
+
+                String author = "Guardian Reporter";
+                if (fields.has("byline")) {
+                    author = fields.getString("byline");
+                }
+
+                String image;
+                if (fields.has("thumbnail")) {
+                    image = fields.getString("thumbnail");
+                } else {
+                    // NOTE: Image taken from Unsplash and put on Imgur to host.
+                    image = "https://i.imgur.com/1pB7QrP.jpg";
+                }
 
                 articles.add(new Article(title, author, section, dateOutput, url, image));
 
@@ -141,11 +152,4 @@ public class QueryUtils {
         return articles;
     }
 
-    public static String convertDate (String dateStr) {
-        String date = dateStr;
-
-
-
-        return date;
-    }
 }
